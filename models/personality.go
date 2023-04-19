@@ -4,6 +4,7 @@ package models
 //inserida em nossa API. E indicamos que iremos enviar esses parâmetros
 //por meio de um arquivo json
 type Personality struct {
+	Id       int    `json:"id"`
 	Nome     string `json:"nome"`
 	Historia string `json:"historia"`
 }
