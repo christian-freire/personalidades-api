@@ -1,11 +1,11 @@
 package controllers
 
 import (
+	"api-go-rest/database"
 	"api-go-rest/models"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -16,11 +16,14 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Home page")
 }
 
-// Função que exebirá os json do array Personality, por meio de json.NewEncoder(w), que irá
-// codificar o ResponseWriter para json, e irá codificar a instancia da variável Personalidades,
-// assim exibindo os json.
-func AllPersonality(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(models.Personalidades)
+// Função que será responsável por eixibir todas as personalidades cadastradas no banco de
+// dados. Criamos uma variável p do tipo models.Personality, e com o comando database.DB.Find,
+// procuramos no nosso banco de dados todos os modelos que combinam com a condição, que no caso
+// é a própria struct de Personality.
+func AllPersonalities(w http.ResponseWriter, r *http.Request) {
+	var p []models.Personalidade
+	database.DB.Find(&p)
+	json.NewEncoder(w).Encode(p)
 }
 
 // Função que exibirá apenas uma das personalidades, que terá seu ID especificado na URL
@@ -30,11 +33,12 @@ func ReturnOnePersonality(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	// Criamos um loop for para buscar nos nossos ids qual tem o valor que está sendo buscado na URL,
-	// este valor está dentro da variável id acima.
-	for _, personalidade := range models.Personalidades {
-		if strconv.Itoa(personalidade.Id) == id {
-			json.NewEncoder(w).Encode(personalidade)
-		}
-	}
+	// Agora para retornar apenas uma das personalidades de acordo com nossa URL, criamos uma variável
+	// chamada personalidade, que é do tipo models.Personalidade. A função First localiza o primeiro
+	// registro ordenado pela chave primária, correspondendo às condições dadas, então ele irá localizar
+	// o Id da pessoa, e verá se corresponde ao id da URL.
+	var personalidade models.Personalidade
+	database.DB.First(&personalidade, id)
+
+	json.NewEncoder(w).Encode(&personalidade)
 }

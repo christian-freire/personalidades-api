@@ -13,12 +13,13 @@ func main() {
 	//então a variável Personalidades recebe o Array
 	//Personality que está instanciado com algunas
 	//informações agora.
-	models.Personalidades = []models.Personality{
+	models.Personalidades = []models.Personalidade{
 		{Id: 1, Nome: "Nome 1", Historia: "Historia 1"},
 		{Id: 2, Nome: "Nome 2", Historia: "Historia 2"},
 	}
 
-	database.ConectaComBancoDeDados()
+	// Chamando a conexão com o banco de dados na nossa função main
+	database.ConectWithDataBase()
 
 	fmt.Println("Iniciando API em Go")
 	routes.HandleRequest()

@@ -16,7 +16,7 @@ func HandleRequest() {
 	// Usando o framework Gorilla Mux para a criação do Router
 	r := mux.NewRouter()
 	r.HandleFunc("/", controllers.Home)
-	r.HandleFunc("/api/personalidades", controllers.AllPersonality).Methods("Get")
+	r.HandleFunc("/api/personalidades", controllers.AllPersonalities).Methods("Get")
 	r.HandleFunc("/api/personalidades/{id}", controllers.ReturnOnePersonality).Methods("Get")
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
