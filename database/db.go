@@ -17,9 +17,9 @@ var (
 // Função nos conecta ao banco de dados com as chaves que estão na variável stringDeConexao, que foram
 // definidas na nossa imagem postgres que está no conteiner Docker, no arquivo docker-compose.yml
 func ConectWithDataBase() {
-	stringDeConexao := "host=localhost user=root password=root dbname=root port=5432 sslmode=disable"
+	conncetString := "host=localhost user=root password=root dbname=root port=5432 sslmode=disable"
 	// Aqui iniciamos a conexão com o DB com a funação gorm.Open
-	DB, err = gorm.Open(postgres.Open(stringDeConexao))
+	DB, err = gorm.Open(postgres.Open(conncetString))
 	if err != nil {
 		log.Panic("Erro ao conectar com banco de dados")
 	}

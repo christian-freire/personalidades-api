@@ -21,6 +21,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 // procuramos no nosso banco de dados todos os modelos que combinam com a condição, que no caso
 // é a própria struct de Personality.
 func AllPersonalities(w http.ResponseWriter, r *http.Request) {
+	// A função w.Header().Set("Content-type", "application/json") indica que a resposta que
+	// esperamos no cabeçalho da requisição é do tipo json.
+	w.Header().Set("Content-type", "application/json")
+
 	var p []models.Personalidade
 	database.DB.Find(&p)
 	json.NewEncoder(w).Encode(p)
